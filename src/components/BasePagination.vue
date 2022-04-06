@@ -37,10 +37,14 @@
         this.$emit('update:page', page);
       },
       paginationInc() {
-        this.$emit('update:page', this.page + 1);
+        if (this.page < this.pages) {
+          this.$emit('update:page', this.page + 1);
+        }
       },
       paginationDec() {
-        this.$emit('update:page', this.page - 1);
+        if (this.page > 1) {
+          this.$emit('update:page', this.page - 1);
+        }
       },
     }
   };
