@@ -8,7 +8,7 @@
         </svg>
       </a>
     </li>
-    <li class="pagination__item" v-for="pageNumber in pages" key="pageNumber">
+    <li class="pagination__item" v-for="pageNumber in pages" :key="pageNumber">
       <a class="pagination__link" :class="{'pagination__link--current' : pageNumber === page}" @click="paginate(pageNumber)">
         {{ pageNumber }}
       </a>
