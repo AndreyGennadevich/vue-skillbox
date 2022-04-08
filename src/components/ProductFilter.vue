@@ -6,11 +6,11 @@
       <fieldset class="form__block">
         <legend class="form__legend">Цена</legend>
         <label class="form__label form__label--price">
-          <input class="form__input" type="text" name="min-price" v-model.number="currentPriceFrom">
+          <input class="form__input" type="text" name="min-price" v-model.number="priceFromModel">
           <span class="form__value">От</span>
         </label>
         <label class="form__label form__label--price">
-          <input class="form__input" type="text" name="max-price" v-model.number="currentPriceTo">
+          <input class="form__input" type="text" name="max-price" v-model.number="priceToModel">
           <span class="form__value">До</span>
         </label>
       </fieldset>
@@ -18,7 +18,7 @@
       <fieldset class="form__block">
         <legend class="form__legend">Категория</legend>
         <label class="form__label form__label--select">
-          <select class="form__select" type="text" name="category" v-model.number="currentCategoryId">
+          <select class="form__select" type="text" name="category" v-model.number="categoryIdModel">
             <option value="0">Все категории</option>
             <option :value="category.id" v-for="category in categories" :key="category.id">{{ category.title }}</option>
           </select>
@@ -30,45 +30,45 @@
         <ul class="colors">
           <li class="colors__item">
             <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#73B6EA" v-model="currentColor">
+              <input class="colors__radio sr-only" type="radio" name="color" value="#73B6EA" v-model="colorModel">
               <span class="colors__value" style="background-color: #73B6EA;">
                   </span>
             </label>
           </li>
           <li class="colors__item">
             <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#FFBE15" v-model="currentColor">
+              <input class="colors__radio sr-only" type="radio" name="color" value="#FFBE15" v-model="colorModel">
               <span class="colors__value" style="background-color: #FFBE15;">
                   </span>
             </label>
           </li>
           <li class="colors__item">
             <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#939393" v-model="currentColor">
+              <input class="colors__radio sr-only" type="radio" name="color" value="#939393" v-model="colorModel">
               <span class="colors__value" style="background-color: #939393;">
                 </span></label>
           </li>
           <li class="colors__item">
             <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#8BE000" v-model="currentColor">
+              <input class="colors__radio sr-only" type="radio" name="color" value="#8BE000" v-model="colorModel">
               <span class="colors__value" style="background-color: #8BE000;">
                 </span></label>
           </li>
           <li class="colors__item">
             <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#FF6B00" v-model="currentColor">
+              <input class="colors__radio sr-only" type="radio" name="color" value="#FF6B00" v-model="colorModel">
               <span class="colors__value" style="background-color: #FF6B00;">
                 </span></label>
           </li>
           <li class="colors__item">
             <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#FFF" v-model="currentColor">
+              <input class="colors__radio sr-only" type="radio" name="color" value="#FFF" v-model="colorModel">
               <span class="colors__value" style="background-color: #FFF;">
                 </span></label>
           </li>
           <li class="colors__item">
             <label class="colors__label">
-              <input class="colors__radio sr-only" type="radio" name="color" value="#000" v-model="currentColor">
+              <input class="colors__radio sr-only" type="radio" name="color" value="#000" v-model="colorModel">
               <span class="colors__value" style="background-color: #000;">
                 </span></label>
           </li>
@@ -146,50 +146,57 @@
 </template>
 
 <script>
-  import categories from '@/data/categories';
+import categories from '@/data/categories';
 
-  export default {
-    data() {
-      return {
-        currentPriceFrom: 0,
-        currentPriceTo: 0,
-        currentCategoryId: 0,
-        currentColor: 0,
-      }
-    },
-    props: ['priceFrom', 'priceTo', 'categoryId', 'color'],
-    computed: {
-      categories() {
-        return categories;
+export default {
+  data() {
+    return {
+      categories,
+    };
+  },
+  props: ['priceFrom', 'priceTo', 'categoryId', 'color'],
+  computed: {
+    priceFromModel: {
+      get() {
+        return this.priceFrom;
+      },
+      set(value) {
+        this.$emit('update:priceFrom', value);
       },
     },
-    watch: {
-      priceFrom(value) {
-        this.currentPriceFrom = value;
+    priceToModel: {
+      get() {
+        return this.priceTo;
       },
-      priceTo(value) {
-        this.currentPriceTo = value;
-      },
-      categoryId(value) {
-        this.currentCategoryId = value;
-      },
-      color(value) {
-        this.currentColor = value;
-      }
-    },
-    methods: {
-      submit() {
-        this.$emit('update:priceFrom', this.currentPriceFrom);
-        this.$emit('update:priceTo', this.currentPriceTo);
-        this.$emit('update:categoryId', this.currentCategoryId);
-        this.$emit('update:color', this.currentColor);
-      },
-      reset() {
-        this.$emit('update:priceFrom', 0);
-        this.$emit('update:priceTo', 0);
-        this.$emit('update:categoryId', 0);
-        this.$emit('update:color', 0);
+      set(value) {
+        this.$emit('update:priceTo', value);
       },
     },
-  }
+    categoryIdModel: {
+      get() {
+        return this.categoryId;
+      },
+      set(value) {
+        this.$emit('update:categoryId', value);
+      },
+    },
+    colorModel: {
+      get() {
+        return this.color;
+      },
+      set(value) {
+        this.$emit('update:color', value);
+      },
+    },
+  },
+  methods: {
+    submit() {
+      this.emitter.emit('submit');
+    },
+    reset() {
+      this.emitter.emit('reset');
+    },
+  },
+
+};
 </script>
