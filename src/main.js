@@ -1,14 +1,11 @@
 import { createApp } from 'vue';
-import { data, message } from '@/data/data';
-import alertFunc from './alertFunc';
+import router from '@/router';
+import store from '@/store';
+import { emitter } from '@/helpers/eventBus';
 import App from './App.vue';
-import mitt from 'mitt';
 
-const emitter = mitt();
 const app = createApp(App);
 app.config.globalProperties.emitter = emitter;
+app.use(store);
 
-app.mount('#app');
-
-alertFunc(data.message);
-alertFunc(message);
+app.use(router).mount('#app');

@@ -9,6 +9,12 @@ import ProductItem from '@/components/ProductItem.vue';
 
 export default {
   components: { ProductItem },
-  props: ['products'],
+  props: {
+    products: {
+      type: Array,
+      required: true,
+      default: [],
+    },
+  },
 };
 </script>

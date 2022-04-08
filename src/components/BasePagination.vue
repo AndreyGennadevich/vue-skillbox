@@ -26,7 +26,23 @@
 
 <script>
   export default {
-    props: ['page', 'count', 'perPage'],
+    props: {
+      page: {
+        type: Number,
+        required: false,
+        default: 0,
+      },
+      count: {
+        type: Number,
+        required: false,
+        default: 0,
+      },
+      perPage: {
+        type: Number,
+        required: false,
+        default: 0,
+      },
+    },
     computed: {
       pages() {
         return Math.ceil(this.count / this.perPage);

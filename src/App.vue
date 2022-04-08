@@ -1,44 +1,21 @@
 <template>
-  <component :is="currentPageComponent" :page-params="currentPageParams"/>
+  <div>
+    <Header/>
+    <router-view/>
+    <Footer/>
+  </div>
 </template>
 
 <script>
-import MainPage from '@/pages/MainPage.vue';
-import ProductPage from '@/pages/ProductPage.vue';
-import NotFoundPage from '@/pages/NotFoundPage.vue';
-
-const routes = {
-  main: 'MainPage',
-  product: 'ProductPage',
-
-};
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
-  data() {
-    return {
-      currentPage: 'main',
-      currentPageParams: {},
-    };
-  },
-  methods: {
-    goToPage(pageName, pageParams) {
-      this.currentPage = pageName;
-      this.currentPageParams = pageParams || {};
-    },
-  },
-  computed: {
-    currentPageComponent() {
-      return routes[this.currentPage] || 'NotFoundPage';
-    },
-  },
-  components: { MainPage, ProductPage, NotFoundPage },
-  created() {
-    this.emitter.on('goToPage', ({ pageName, pageParams }) => this.goToPage(pageName, pageParams));
-  },
+  components: { Header, Footer },
 };
+
+</script>
 
 <style lang="stylus">
 
 </style>;
-
-</script>
