@@ -154,7 +154,28 @@ export default {
       categories,
     };
   },
-  props: ['priceFrom', 'priceTo', 'categoryId', 'color'],
+  props: {
+    priceFrom: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    priceTo: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    categoryId: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    color: {
+      type: [String, Number],
+      required: true,
+      default: 0,
+    },
+  },
   computed: {
     priceFromModel: {
       get() {
