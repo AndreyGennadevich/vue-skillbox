@@ -27,7 +27,6 @@
         <div class="cart__field">
           <ul class="cart__list">
             <CartItem v-for="item in products" :item="item" :key="item.productId"/>
-
           </ul>
         </div>
 
