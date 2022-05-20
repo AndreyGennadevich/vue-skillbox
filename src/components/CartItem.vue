@@ -1,7 +1,7 @@
 <template>
   <li class="cart__item product" >
     <div class="product__pic">
-      <img :src="item.product.image" width="120" height="120" srcset="img/phone-square-3@2x.jpg 2x" :alt="item.product.title">
+      <img :src="item.product.image" width="120" height="120" :alt="item.product.title">
     </div>
     <h3 class="product__title">
       {{ item.product.title }}
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     numberFormat,
-    ...Vuex.mapMutations({ deleteProduct: 'deleteCartProduct' }),
+    ...Vuex.mapActions({ deleteProduct: 'deleteCartProduct' }),
   },
   computed: {
     amount: {
@@ -62,7 +62,7 @@ export default {
         return this.item.amount;
       },
       set(value) {
-        this.$store.commit('updateCartProductAmount', { productId: this.item.productId, amount: value });
+        this.$store.dispatch('updateCartProductAmount', { productId: this.item.productId, amount: value });
       },
     },
   },
