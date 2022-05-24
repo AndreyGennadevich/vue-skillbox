@@ -3,6 +3,8 @@ import MainPage from '@/pages/MainPage.vue';
 import ProductPage from '@/pages/ProductPage.vue';
 import NotFoundPage from '@/pages/NotFoundPage.vue';
 import CartPage from '@/pages/CartPage.vue';
+import OrderPage from '@/pages/OrderPage';
+import OrderInfoPage from '@/pages/OrderInfoPage';
 
 const routes = [
   {
@@ -20,6 +22,16 @@ const routes = [
     path: '/cart',
     name: 'cart',
     component: CartPage,
+  },
+  {
+    path: '/order',
+    name: 'order',
+    component: OrderPage,
+  },
+  {
+    path: '/order/:id',
+    name: 'orderInfo',
+    component: OrderInfoPage,
   },
   {
     path: '/:pathMatch(.*)*',
