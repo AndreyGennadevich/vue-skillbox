@@ -15,7 +15,7 @@ export default {
   components: { Header, Footer },
   created() {
     const userAccessKey = localStorage.getItem('userAccessKey');
-    if(userAccessKey) {
+    if (userAccessKey) {
       this.updateUserAccessKey(userAccessKey);
     }
 

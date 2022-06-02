@@ -121,12 +121,11 @@
 </template>
 
 <script>
+    import { getOrders } from '@/api/order';
     import BaseFormField from '@/components/BaseFormField.vue';
     import BaseFormText from '@/components/BaseFormText.vue';
     import BaseFormTextarea from '@/components/BaseFormTextarea.vue';
-    import { API_BASE_URL } from '@/config';
     import numberFormat from '@/helpers/numberFormat';
-    import axios from 'axios';
     import Vuex from 'vuex';
 
     export default {
@@ -146,11 +145,7 @@
             this.formError = {};
             this.formErrorMessage = '';
             this.formLoading = true;
-
-            return axios
-              .post(API_BASE_URL + `/api/orders?userAccessKey=${this.$store.state.userAccessKey}`, {
-                ...this.formData,
-              })
+            return getOrders(this.formData)
               .then(response=> {
                 this.$store.commit('resetCart');
                 this.$store.commit('updateOrderInfo', response.data);

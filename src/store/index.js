@@ -2,7 +2,7 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import { API_BASE_URL } from '@/config';
 
-const store = new Vuex.Store({
+export const store = new Vuex.Store({
   state: {
     cartProducts: [],
     userAccessKey: null,

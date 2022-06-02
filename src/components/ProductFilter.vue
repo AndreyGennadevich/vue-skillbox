@@ -110,8 +110,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import {API_BASE_URL} from '../config';
+import { getColors } from '@/api/colors';
+import { getProductCategories } from '@/api/productCategories';
 
 export default {
   data() {
@@ -184,11 +184,11 @@ export default {
       this.emitter.emit('reset');
     },
     loadCategories() {
-      axios.get(API_BASE_URL + '/api/productCategories')
+      getProductCategories()
         .then(response => this.categories = response.data.items);
     },
     loadColors() {
-      axios.get(API_BASE_URL + '/api/colors')
+      getColors()
         .then(response => this.colors = response.data.items)
     },
   },
