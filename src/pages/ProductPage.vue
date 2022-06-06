@@ -188,8 +188,7 @@
 
 <script>
 import numberFormat from '@/helpers/numberFormat';
-import axios from 'axios';
-import { API_BASE_URL } from '@/config';
+import { getProduct } from '@/api/product';
 import Vuex from 'vuex';
 
 export default {
@@ -240,8 +239,7 @@ export default {
     loadProduct() {
       this.productLoading = true;
       this.productLoadingFailed = false;
-      axios
-        .get(API_BASE_URL + `/api/products/` + this.$route.params.id)
+      getProduct(this.$route.params.id)
         .then(response => this.productData = response.data)
         .catch(() => this.productLoadingFailed = true)
         .then(() => this.productLoading = false);

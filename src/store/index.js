@@ -2,13 +2,21 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import { API_BASE_URL } from '@/config';
 
-const store = new Vuex.Store({
+export const store = new Vuex.Store({
   state: {
     cartProducts: [],
     userAccessKey: null,
     cartProductsData: [],
+    orderInfo: null,
   },
   mutations: {
+    updateOrderInfo(state, orderInfo) {
+      state.orderInfo = orderInfo;
+    },
+    resetCart(state) {
+      state.cartProducts = [];
+      state.cartProductsData = [];
+    },
     updateCartProductAmount(state, { productId, amount }) {
       const item = state.cartProducts.find((itemCart) => itemCart.productId === productId);
 
@@ -53,6 +61,17 @@ const store = new Vuex.Store({
     },
   },
   actions: {
+    loadOrderInfo(context, orderId) {
+      return axios
+        .get(API_BASE_URL + '/api/orders/' + orderId, {
+          params: {
+            userAccessKey: context.state.userAccessKey,
+          }
+        })
+        .then(response => {
+          context.commit('updateOrderInfo', response.data);
+        });
+    },
     loadCart(context) {
       return axios
         .get(API_BASE_URL + '/api/baskets', {
@@ -111,7 +130,7 @@ const store = new Vuex.Store({
     deleteCartProduct(context, productId) {
       context.commit('deleteCartProduct', productId);
       return axios
-        .delete(API_BASE_URL + `/api/baskets/products?userAccessKey=${context.state.userAccessKey}`, {
+        .delete(API_BASE_URL + `/api/baskets/products`, {
           params: {
             userAccessKey: context.state.userAccessKey,
           },
@@ -123,7 +142,18 @@ const store = new Vuex.Store({
           context.commit('updateCartProductsData', response.data.items);
           context.commit('syncCartProducts');
         })
-    }
+    },
+    // order(context, orderData) {
+    //   return axios
+    //     .post(API_BASE_URL + `/api/orders`, {
+    //       params: {
+    //         userAccessKey: context.state.userAccessKey,
+    //       },
+    //       data: {
+    //         ...orderData,
+    //       }
+    //     })
+    // }
   },
 });
 
